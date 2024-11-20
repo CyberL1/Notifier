@@ -9,9 +9,11 @@ export class Job {
 
   constructor(service: Service) {
     this.service = service;
-    this.job = new CronJob(this.service.schedule, () =>
-      console.log(`Job for "${this.service.name}" service executed at ${new Date().toTimeString()}`),
-    );
+    this.job = new CronJob(this.service.schedule, () => {
+      console.log(
+        `Job for "${this.service.name}" service executed at ${new Date().toTimeString()}`,
+      );
+    });
 
     debugLog(`Job for service "${this.service.name}" created`);
   }
@@ -28,6 +30,6 @@ export class Job {
 
   setTime(schedule: string) {
     this.job.setTime(new CronTime(schedule));
-    debugLog(`Cron time updated for "${this.id}"`);
+    debugLog(`Cron time updated for "${this.service.name}"`);
   }
 }
