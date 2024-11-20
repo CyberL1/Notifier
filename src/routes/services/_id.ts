@@ -4,6 +4,7 @@ import { ServiceSchema } from "#src/schemas.ts";
 import type { Service } from "#src/types.ts";
 import { validateSchedule } from "#src/utils/validateSchedule.ts";
 import Jobs from "#src/utils/Jobs.ts";
+import { CronTime } from "cron";
 
 interface Params {
   id: number;
@@ -80,6 +81,8 @@ export default (fastify: FastifyInstance) => {
           schedule: body.schedule,
         },
       });
+
+      Jobs.get(service.name).setTime(new CronTime(body.schedule));
 
       return serviceInDb;
     },
