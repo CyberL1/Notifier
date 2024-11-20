@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node --experimental-strip-types src/index.ts",
-    "dev": "node --experimental-strip-types --watch src/index.ts",
-    "schema": "typescript-json-schema src/types.ts * -o schema.json"
+    "dev": "node --experimental-strip-types --watch src/index.ts"
   },
   "imports": {
     "#src/*": "./src/*"
@@ -23,7 +22,6 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.9.1",
-    "prisma": "^5.22.0",
-    "typescript-json-schema": "^0.65.1"
+    "prisma": "^5.22.0"
   }
 }
