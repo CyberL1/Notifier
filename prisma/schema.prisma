@@ -16,6 +16,7 @@ datasource db {
 model Service {
   id       Int     @id @default(autoincrement())
   name     String
+  type     String
   channel  Channel @relation(fields: [id], references: [id])
   schedule String
 }

@@ -44,6 +44,7 @@ export default (fastify: FastifyInstance) => {
       const serviceInDb = await db.service.create({
         data: {
           name: body.name,
+          type: body.type,
           channel: { connect: { id: body.channelId } },
           schedule: body.schedule,
         },

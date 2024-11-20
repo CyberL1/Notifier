@@ -3,15 +3,21 @@ export const ServiceSchema = {
   properties: {
     name: {
       type: "string",
+      minLength: 1,
+    },
+    type: {
+      type: "string",
+      minLength: 1,
     },
     channelId: {
-      type: "number",
+      type: "number"
     },
     schedule: {
       type: "string",
+      minLength: 1,
     },
   },
-  required: ["name", "channelId", "schedule"],
+  required: ["name", "type", "channelId", "schedule"],
 };
 
 export const ChannelSchema = {
@@ -19,6 +25,7 @@ export const ChannelSchema = {
   properties: {
     name: {
       type: "string",
+      minLength: 1,
     },
     enabled: {
       type: "boolean",

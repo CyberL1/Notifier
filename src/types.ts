@@ -1,6 +1,7 @@
 export interface Service {
   id: number;
   name: string;
+  type: string;
   channelId: number;
   schedule: string;
 }
