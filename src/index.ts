@@ -3,6 +3,7 @@ import { readdirSync } from "fs";
 import { db } from "./prisma.ts";
 import Jobs from "./utils/Jobs.ts";
 import { Job } from "./classes/Job.ts";
+import Services from "./utils/Services.ts";
 
 const fastify = Fastify();
 
@@ -40,6 +41,8 @@ try {
   const services = await db.service.findMany();
 
   for (const service of services) {
+    Services.add(service, true);
+
     const job = new Job(service);
 
     Jobs.add(job);

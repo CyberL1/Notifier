@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { db } from "#src/prisma.ts";
 import { ChannelSchema } from "#src/schemas.ts";
 import type { Channel } from "#src/types.ts";
+import Services from "#src/utils/Services.ts";
 
 interface Params {
   id: number;
@@ -36,6 +37,7 @@ export default (fastify: FastifyInstance) => {
 
       const channel = await db.channel.findUnique({
         where: { id: Number(req.params.id) },
+        include: { Service: true },
       });
 
       if (!channel) {
@@ -55,6 +57,9 @@ export default (fastify: FastifyInstance) => {
           data: body.data,
         },
       });
+
+      Services.remove(channel.Service[0].name);
+      Services.add(channel.Service[0], true);
 
       return channelInDb;
     },

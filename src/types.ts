@@ -3,6 +3,7 @@ export interface Service {
   name: string;
   type: string;
   channelId: number;
+  channel?: Channel;
   schedule: string;
 }
 
