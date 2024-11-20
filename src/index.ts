@@ -10,25 +10,23 @@ const routesDir = readdirSync(`${import.meta.dirname}/routes`, {
 });
 
 for (let file of routesDir) {
-  if (file instanceof Buffer) {
-    console.log("file is Buffer", file);
-    continue;
+  if (typeof file === "string") {
+    if (!file.endsWith(".ts")) {
+      continue;
+    }
+
+    file = file.replaceAll("\\", "/");
+
+    let route = `/${file.split(".").slice(0, -1).join(".")}`;
+    route = route.replaceAll("_", ":");
+
+    const routePath = route.endsWith("/index") ? route.slice(0, -6) : route;
+
+    console.log(`Loading route: ${routePath}`);
+    fastify.register((await import(`./routes/${file}`)).default, {
+      prefix: routePath,
+    });
   }
-
-  if (!file.endsWith(".ts")) {
-    continue;
-  }
-
-  file = file.replaceAll("\\", "/");
-
-  const route = `/${file.split(".").slice(0, -1).join(".")}`;
-
-  const routePath = route.endsWith("/index") ? route.slice(0, -6) : route;
-
-  console.log(`Loading route: ${routePath}`);
-  fastify.register((await import(`./routes/${file}`)).default, {
-    prefix: routePath,
-  });
 }
 
 try {
