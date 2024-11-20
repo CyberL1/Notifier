@@ -3,6 +3,7 @@ import { db } from "#src/prisma.ts";
 import { ServiceSchema } from "#src/schemas.ts";
 import type { Service } from "#src/types.ts";
 import { validateSchedule } from "#src/utils/validateSchedule.ts";
+import Jobs from "#src/utils/Jobs.ts";
 
 interface Params {
   id: number;
@@ -100,7 +101,10 @@ export default (fastify: FastifyInstance) => {
         };
       }
 
+      Jobs.get(service.name).stop();
+
       await db.service.delete({ where: { id: Number(req.params.id) } });
+      Jobs.remove(service.name);
 
       reply.code(204);
     },

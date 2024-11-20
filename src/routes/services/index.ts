@@ -3,6 +3,8 @@ import { ServiceSchema } from "#src/schemas.ts";
 import type { Service } from "#src/types.ts";
 import { db } from "#src/prisma.ts";
 import { validateSchedule } from "#src/utils/validateSchedule.ts";
+import { Job } from "#src/classes/Job.ts";
+import Jobs from "#src/utils/Jobs.ts";
 
 export default (fastify: FastifyInstance) => {
   fastify.get("/", async (req: FastifyRequest, reply: FastifyReply) => {
@@ -59,6 +61,11 @@ export default (fastify: FastifyInstance) => {
           schedule: body.schedule,
         },
       });
+
+      const job = new Job(body);
+      Jobs.add(job);
+
+      job.start();
 
       return serviceInDb;
     },

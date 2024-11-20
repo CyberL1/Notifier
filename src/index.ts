@@ -1,5 +1,8 @@
 import Fastify from "fastify";
 import { readdirSync } from "fs";
+import { db } from "./prisma.ts";
+import Jobs from "./utils/Jobs.ts";
+import { Job } from "./classes/Job.ts";
 
 const fastify = Fastify();
 
@@ -32,6 +35,16 @@ for (let file of routesDir) {
 try {
   fastify.listen({ port: Number(process.env.PORT) });
   console.log("App ready on", process.env.PORT);
+
+  // Create service jobs
+  const services = await db.service.findMany();
+
+  for (const service of services) {
+    const job = new Job(service);
+
+    Jobs.add(job);
+    job.start();
+  }
 } catch (err) {
   console.error(err);
 }
