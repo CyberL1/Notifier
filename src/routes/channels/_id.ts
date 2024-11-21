@@ -53,6 +53,7 @@ export default (fastify: FastifyInstance) => {
         where: { id: Number(req.params.id) },
         data: {
           name: body.name,
+          type: body.type,
           enabled: body.enabled,
           data: body.data,
         },

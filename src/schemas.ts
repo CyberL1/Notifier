@@ -10,7 +10,7 @@ export const ServiceSchema = {
       minLength: 1,
     },
     channelId: {
-      type: "number"
+      type: "number",
     },
     schedule: {
       type: "string",
@@ -27,6 +27,10 @@ export const ChannelSchema = {
       type: "string",
       minLength: 1,
     },
+    type: {
+      type: "string",
+      minLength: 1,
+    },
     enabled: {
       type: "boolean",
     },
@@ -34,5 +38,5 @@ export const ChannelSchema = {
       type: "object",
     },
   },
-  required: ["name"],
+  required: ["name", "type"],
 };

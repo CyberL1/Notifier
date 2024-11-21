@@ -5,6 +5,7 @@ import type { Service } from "#src/types.ts";
 import { validateSchedule } from "#src/utils/validateSchedule.ts";
 import Jobs from "#src/utils/Jobs.ts";
 import { CronTime } from "cron";
+import Services from "#src/utils/Services.ts";
 
 interface Params {
   id: number;
@@ -81,6 +82,9 @@ export default (fastify: FastifyInstance) => {
           schedule: body.schedule,
         },
       });
+
+      Services.remove(service.name);
+      Services.add(service, true);
 
       Jobs.get(service.name).setTime(new CronTime(body.schedule));
 

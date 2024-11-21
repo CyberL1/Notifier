@@ -10,6 +10,9 @@
       ],
       "#services/*": [
         "./services/*"
+      ],
+      "#channels/*": [
+        "./channels/*"
       ]
     }
   }

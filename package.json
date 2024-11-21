@@ -9,7 +9,8 @@
   },
   "imports": {
     "#src/*": "./src/*",
-    "#services/*": "./services/*"
+    "#services/*": "./services/*",
+    "#channels/*": "./channels/*"
   },
   "keywords": [],
   "author": "",

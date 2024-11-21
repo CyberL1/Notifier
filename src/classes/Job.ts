@@ -19,9 +19,7 @@ export class Job {
       }
 
       try {
-        (await import(`#services/${service.name}.ts`)).run(
-          service.channel.data,
-        );
+        (await import(`#services/${service.type}.ts`)).run(service);
       } catch (err) {
         console.error(`Job for "${service.name}" errored:`, err);
       }

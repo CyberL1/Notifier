@@ -10,6 +10,7 @@ export interface Service {
 export interface Channel {
   id: number;
   name: string;
+  type: string;
   enabled?: boolean;
   data: object;
 }

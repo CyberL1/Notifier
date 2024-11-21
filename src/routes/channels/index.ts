@@ -19,6 +19,7 @@ export default (fastify: FastifyInstance) => {
       const channelInDb = await db.channel.create({
         data: {
           name: body.name,
+          type: body.type,
           enabled: body.enabled,
           data: body.data,
         },
