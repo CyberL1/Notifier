@@ -34,6 +34,9 @@ export const ChannelSchema = {
     enabled: {
       type: "boolean",
     },
+    settings: {
+      type: "object",
+    },
     data: {
       type: "object",
     },

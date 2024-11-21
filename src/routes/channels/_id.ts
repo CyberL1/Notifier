@@ -55,6 +55,7 @@ export default (fastify: FastifyInstance) => {
           name: body.name,
           type: body.type,
           enabled: body.enabled,
+          settings: body.settings,
           data: body.data,
         },
       });

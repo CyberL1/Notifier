@@ -12,5 +12,6 @@ export interface Channel {
   name: string;
   type: string;
   enabled?: boolean;
+  settings: object;
   data: object;
 }

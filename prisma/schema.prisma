@@ -24,10 +24,11 @@ model Service {
 }
 
 model Channel {
-  id      Int       @id @default(autoincrement())
-  name    String
-  type    String
-  enabled Boolean?  @default(false)
-  data    Json      @default("{}")
-  Service Service[]
+  id       Int       @id @default(autoincrement())
+  name     String
+  type     String
+  enabled  Boolean?  @default(false)
+  settings Json      @default("{}")
+  data     Json      @default("{}")
+  Service  Service[]
 }
