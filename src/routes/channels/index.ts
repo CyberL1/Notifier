@@ -1,10 +1,10 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 import { ChannelSchema } from "#src/schemas.ts";
 import type { Channel } from "#src/types.ts";
 import { db } from "#src/prisma.ts";
 
 export default (fastify: FastifyInstance) => {
-  fastify.get("/", async (req: FastifyRequest, reply: FastifyReply) => {
+  fastify.get("/", async () => {
     const channels = await db.channel.findMany();
 
     return channels;
@@ -13,7 +13,7 @@ export default (fastify: FastifyInstance) => {
   fastify.post(
     "/",
     { schema: { body: ChannelSchema } },
-    async (req: FastifyRequest, reply: FastifyReply) => {
+    async (req: FastifyRequest) => {
       const body = req.body as Channel;
 
       const channelInDb = await db.channel.create({

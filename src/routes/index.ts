@@ -1,8 +1,8 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyInstance } from "fastify";
 import { db } from "#src/prisma.ts";
 
 export default (fastify: FastifyInstance) => {
-  fastify.get("/", async (req: FastifyRequest, reply: FastifyReply) => {
+  fastify.get("/", async () => {
     const services = await db.service.count();
     const channels = await db.channel.count();
 

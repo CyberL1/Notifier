@@ -7,7 +7,7 @@ import { Job } from "#src/classes/Job.ts";
 import Jobs from "#src/utils/Jobs.ts";
 
 export default (fastify: FastifyInstance) => {
-  fastify.get("/", async (req: FastifyRequest, reply: FastifyReply) => {
+  fastify.get("/", async () => {
     const services = await db.service.findMany();
 
     return services;
