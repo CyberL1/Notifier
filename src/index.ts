@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 import { readdirSync } from "fs";
 import { db } from "./prisma.ts";
 import Jobs from "./utils/Jobs.ts";
@@ -6,6 +7,8 @@ import { Job } from "./classes/Job.ts";
 import Services from "./utils/Services.ts";
 
 const fastify = Fastify();
+
+fastify.register(cors);
 
 process.env.PORT ??= "3000";
 
