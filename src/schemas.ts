@@ -43,3 +43,17 @@ export const ChannelSchema = {
   },
   required: ["name", "type"],
 };
+
+export const AuthSchema = {
+  type: "object",
+  properties: {
+    server: {
+      type: "string",
+      minLength: 1,
+    },
+    password: {
+      type: "string",
+    },
+  },
+  required: ["server"],
+};

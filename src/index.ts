@@ -40,7 +40,9 @@ if (process.env.PASSWORD) {
   fastify.addHook(
     "onRequest",
     (req: FastifyRequest, reply: FastifyReply, done) => {
-      console.log("Authorization required");
+      if (req.url === "/auth/callback") {
+        return done();
+      }
 
       if (!req.headers.authorization) {
         reply.code(401);
