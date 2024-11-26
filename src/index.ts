@@ -1,4 +1,4 @@
-import Fastify from "fastify";
+import Fastify, { type FastifyReply, type FastifyRequest } from "fastify";
 import cors from "@fastify/cors";
 import { readdirSync } from "fs";
 import { db } from "./prisma.ts";
@@ -34,6 +34,33 @@ for (let file of routesDir) {
       prefix: routePath,
     });
   }
+}
+
+if (process.env.PASSWORD) {
+  fastify.addHook(
+    "onRequest",
+    (req: FastifyRequest, reply: FastifyReply, done) => {
+      console.log("Authorization required");
+
+      if (!req.headers.authorization) {
+        reply.code(401);
+
+        reply.send({
+          error: "Cannot access resource",
+          reason: "Unauthorized",
+        });
+      } else if (req.headers.authorization != process.env.PASSWORD) {
+        reply.code(403);
+
+        reply.send({
+          error: "Cannot access resource",
+          reason: "Forbidden",
+        });
+      }
+
+      done();
+    },
+  );
 }
 
 try {
