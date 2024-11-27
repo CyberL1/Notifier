@@ -8,7 +8,7 @@ import Jobs from "#src/utils/Jobs.ts";
 
 export default (fastify: FastifyInstance) => {
   fastify.get("/", async () => {
-    const services = await db.service.findMany();
+    const services = await db.service.findMany({ orderBy: { id: "asc" } });
 
     return services;
   });

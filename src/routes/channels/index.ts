@@ -5,7 +5,7 @@ import { db } from "#src/prisma.ts";
 
 export default (fastify: FastifyInstance) => {
   fastify.get("/", async () => {
-    const channels = await db.channel.findMany();
+    const channels = await db.channel.findMany({ orderBy: { id: "asc" } });
 
     return channels;
   });
