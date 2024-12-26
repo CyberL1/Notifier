@@ -11,7 +11,7 @@ export default (fastify: FastifyInstance) => {
       let channels: Channel[] | string[];
 
       if (req.query.files) {
-        channels = readdirSync("channels");
+        channels = readdirSync("channels").map((file) => file.slice(0, -3));
       } else {
         channels = (await db.channel.findMany({
           orderBy: { id: "asc" },

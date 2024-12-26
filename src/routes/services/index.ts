@@ -14,7 +14,7 @@ export default (fastify: FastifyInstance) => {
       let services: Service[] | string[];
 
       if (req.query.files) {
-        services = readdirSync("services");
+        services = readdirSync("services").map((file) => file.slice(0, -3));
       } else {
         services = (await db.service.findMany({
           orderBy: { id: "asc" },
