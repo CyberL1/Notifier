@@ -5,13 +5,25 @@ import { db } from "#src/prisma.ts";
 import { validateSchedule } from "#src/utils/validateSchedule.ts";
 import { Job } from "#src/classes/Job.ts";
 import Jobs from "#src/utils/Jobs.ts";
+import { readdirSync } from "fs";
 
 export default (fastify: FastifyInstance) => {
-  fastify.get("/", async () => {
-    const services = await db.service.findMany({ orderBy: { id: "asc" } });
+  fastify.get(
+    "/",
+    async (req: FastifyRequest<{ Querystring: { files: boolean } }>) => {
+      let services: Service[] | string[];
 
-    return services;
-  });
+      if (req.query.files) {
+        services = readdirSync("services");
+      } else {
+        services = (await db.service.findMany({
+          orderBy: { id: "asc" },
+        })) as Service[];
+      }
+
+      return services;
+    },
+  );
 
   fastify.post(
     "/",

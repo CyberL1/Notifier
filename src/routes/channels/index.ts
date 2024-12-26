@@ -2,13 +2,25 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 import { ChannelSchema } from "#src/schemas.ts";
 import type { Channel } from "#src/types.ts";
 import { db } from "#src/prisma.ts";
+import { readdirSync } from "fs";
 
 export default (fastify: FastifyInstance) => {
-  fastify.get("/", async () => {
-    const channels = await db.channel.findMany({ orderBy: { id: "asc" } });
+  fastify.get(
+    "/",
+    async (req: FastifyRequest<{ Querystring: { files: boolean } }>) => {
+      let channels: Channel[] | string[];
 
-    return channels;
-  });
+      if (req.query.files) {
+        channels = readdirSync("channels");
+      } else {
+        channels = (await db.channel.findMany({
+          orderBy: { id: "asc" },
+        })) as Channel[];
+      }
+
+      return channels;
+    },
+  );
 
   fastify.post(
     "/",
