@@ -1,0 +1,25 @@
+name: Notifier
+
+services:
+  server:
+    build: ..
+    env_file: ../.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres/postgres
+    ports:
+      - 3000:3000
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - ./data:/var/lib/postgresql/data

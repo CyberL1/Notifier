@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if ! npx prisma migrate status; then
+  echo Database outdated, syncing...
+  npx prisma migrate deploy
+else
+  echo Database up to date, skipping...
+fi
+
+npm start
